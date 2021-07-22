@@ -1,0 +1,5 @@
+---
+applications:
+ - name: GetStartedPython
+   host: gtsp-test-9876
+   memory: 128M
