@@ -1,5 +1,5 @@
 ---
 applications:
- - name: GetStartedPython
-   host: gtsp-test-9876
+ - name: custom-ci-19218239
+   host: custom-ci-19218239
    memory: 128M
