@@ -1,0 +1,33 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	min-height: 100vh;
+	background: linear-gradient(45deg, lightblue, pink);
+}
+
+.flex-col {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.home {
+	min-height: 300px;
+}
+
+#welcome {
+	padding: 5px;
+	margin: 5px;
+	text-align: center;
+	font-family: Arial;
+}
+
+.text-input {
+	padding: 5px;
+	margin: 10px;
+}
