@@ -4,7 +4,9 @@ import atexit
 import os
 import json
 
-app = Flask(__name__, static_url_path='')
+app = Flask(__name__, static_url_path='', 
+                        static_folder='front-end/build/', 
+                        template_folder='front-end/build/')
 
 db_name = 'mydb'
 client = None
@@ -40,7 +42,7 @@ port = int(os.getenv('PORT', 8000))
 
 @app.route('/')
 def root():
-    return app.send_static_file('index.html')
+    return render_template('index.html');
 
 # /* Endpoint to greet and add a new visitor to database.
 # * Send a POST request to localhost:8000/api/visitors with body
