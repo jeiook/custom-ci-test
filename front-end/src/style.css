@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -17,22 +19,55 @@ body {
 }
 
 .home {
-  min-height: 300px;
+  min-height: 400px;
+  height: 60vh;
+  min-width: 300px;
+  width: 25vw;
+  padding: 50px 20px;
+  margin: 10vh auto 0 auto;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0 0 5px 1px gray;
+  font-family: Roboto, 'sans-serif';
 }
 
 #welcome {
   padding: 5px;
   margin: 5px;
-  text-align: center;
-  font-family: Arial;
 }
 
 #submit {
+  padding: 10px 30px;
+  border: 0;
+  border-radius: 10px;
+  margin: 20px auto 0 auto;
+  color: white;
+  font-weight: bold;
+  font-size: 15px;
+  background: #f5af19;
+  transition: background 0.5s;
+}
+
+#submit:hover {
+  cursor: pointer;
+}
+
+#submit:active {
+  background: grey; 
+}
+
+label {
+  color: #6d6a6a;
+}
+
+input {
   padding: 5px;
 }
 
+input:focus:invalid {
+  box-shadow: 0 0 5px 3px red;
+}
 
-.text-input {
-  padding: 5px;
-  margin: 10px;
+input:focus:valid {
+  box-shadow: 0 0 5px 3px green;
 }

@@ -25,31 +25,31 @@ class Home extends Component {
 		const name = document.getElementById("name").value;
 		const budget = document.getElementById("budget").value;
 		const product = document.getElementById("product").value;
-    if (name && !isNaN(budget) && product) {
+    if (name && !isNaN(budget) && Number(budget) > 0 && product) {
     	this.setState({
     		name,
-    		budget,
+    		budget: Number(budget),
     		product,
     	});
       Net.post(JSON.stringify(this.state));
       alert("information sent!");
     } else {
-      alert(
-        "You need to enter something in all three fields (a number for budget)"
-      );
+      alert("You need to enter something in all three fields (and have a " +
+      	"positive number for the budget)");
     }
 	}
 
 	render() {
 		return (
 			<div className="home flex-col">
-				<h1 id="welcome">First Time User?</h1>
-					<label htmlFor="name">Name:</label>
-					<input type="text" id="name" name="name" />
-					<label htmlFor="budget">Budget:</label>
-					<input type="text" id="budget" name="budget" />
-					<DropDown name="product_type" id="product" itemList={this.products} />
-					<button id="submit" onClick={this.sendUserInfo}>Find Recommendations</button>
+				<h1 id="welcome">Sign in</h1>
+				<label htmlFor="name">Name</label>
+				<input type="text" id="name" name="name" required minLength="2" />
+				<label htmlFor="budget">Budget</label>
+				<input type="number" id="budget" name="budget" required min="0" />
+				<label htmlFor="product_type">product type</label>
+				<DropDown name="product_type" id="product" itemList={this.products} />
+				<button id="submit" onClick={this.sendUserInfo}>Find Recommendations</button>
 			</div>
 		);
 	}
