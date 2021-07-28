@@ -1,8 +1,10 @@
 from cloudant import Cloudant
 from flask import Flask, render_template, request, jsonify
 import atexit
+import requests
 import os
 import json
+import copy
 
 app = Flask(__name__, static_url_path='', 
                         static_folder='front-end/build/', 
@@ -73,13 +75,53 @@ def get_visitor():
 def put_visitor():
     user = request.json['name']
     data = {'name':user}
+    budget_data = request.json['budget']
+    product_data = request.json['product']
+
+    response_ref = requests.get('https://data.energystar.gov/resource/p5st-her9.json') .text
+    response_info_ref = json.loads(response_ref)
+
+    link1 = 'https://api.bestbuy.com/v1/products((categoryPath.id=abcat0901000))?apiKey=qhqws47nyvgze2mq3qx4jadt&sort=name.asc&show=name,modelNumber,regularPrice,url&pageSize=99&'
+    link2 = 'page='
+    link3 = '&format=json'
+
+    info_list = []
+
+    for i in 15:
+        link = '' . join((link1,link2,str(i+1)),link3)
+        fridgeCostRef = requests.get(link) .text
+        fridgecost_info = json.loads(fridgeCostRef)
+        for j in 99:
+            if (budget_data >= fridgecost_info['products'][j]['regularPrice']):
+                dict1 = {'loc':i+1,'index':j,'price':fridgecost_info['products'][j]['regularPrice'],'modelNum':fridgecost_info['products'][j]['modelNumber']}
+                info_list.append(dict1)
+
+    priceOfFridge = 100000
+    indexLoc = -1
+    for x in response_info_ref:
+        modelNumberEn = response_info_ref[x]['model_number']
+        for y in info_list:
+            priceInfo = info_list[y]['price']
+            if(modelNumberEn == info_list[y]['modelNum'] and priceInfo < priceOfFridge):
+                priceOfFridge = priceInfo
+                indexLoc = y
+
+    data_to_front = {}
+
+    if (indexLoc != -1):
+        link ='' .join((link1,link2,str(info_list[indexLoc]['loc'],link3)))
+        fridgeCostRef = requests.get(link) .text
+        fridgecost_info = json.loads(fridgeCostRef)
+        dictToCopy = fridgecost_info['products'][info_list[indexLoc]['index']]
+        data_to_front = copy.deepcopy(dictToCopy)
+
     if client:
         my_document = db.create_document(data)
         data['_id'] = my_document['_id']
-        return jsonify(data)
+        return jsonify(data_to_front)
     else:
         print('No database')
-        return jsonify(data)
+        return jsonify(data_to_front)
 
 @atexit.register
 def shutdown():
