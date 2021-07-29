@@ -55,7 +55,6 @@ input:focus:valid {
   background: white;
   box-shadow: 0 0 5px 1px gray;
   font-family: Roboto, 'sans-serif';
-  text-align: center;
 }
 
 .home {
@@ -63,6 +62,7 @@ input:focus:valid {
   height: 60vh;
   min-width: 300px;
   width: 25vw;
+  text-align: center;
 }
 
 #welcome {
@@ -96,7 +96,6 @@ input:focus:valid {
 }
 
 .search {
-  /*background: grey;*/
   width: 500px;
   margin: 10vh auto;
   font-family: Roboto;
@@ -109,20 +108,33 @@ input:focus:valid {
   width: 25vw;
 }
 
-.eff-color-box {
+/*.eff-color-box {
   background: linear-gradient(90deg, red, green);
   width: 100px;
   height: 20px;
   border-radius: 30px;
-}
-
-.product-effScore {
-  width: 300px;
-  height: 200px;
-}
+}*/
 
 .product-price {
   color: brown;
+}
+
+.product-eff {
+  width: 500px;
+  height: 200px;
+}
+
+.energy-info {
+  background: white;
+  padding: 10px;
+  border-radius: 100px;
+}
+
+.energy-info-dark {
+  background: black;
+  color: white;
+  padding: 10px;
+  border-radius: 100px;
 }
 
 .loading {

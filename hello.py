@@ -81,6 +81,7 @@ def put_visitor():
     response_ref = requests.get('https://data.energystar.gov/resource/p5st-her9.json', 
         headers={'X-App-Token': 'k01giiJ5UAtRU31Z5myYGnVAk'}) .text
     response_info_api_ref = json.loads(response_ref)
+    response_info_ref = copy.deepcopy(response_info_api_ref)
 
     linkPartOne = 'https://api.bestbuy.com/v1/products((categoryPath.id=abcat0901000))?apiKey=qhqws47nyvgze2mq3qx4jadt&sort=name.asc&show=name,modelNumber,regularPrice,url&pageSize=99&'
     linkPartTwo = 'page='
@@ -92,6 +93,7 @@ def put_visitor():
         link = '' . join((linkPartOne,linkPartTwo,str(i+1),linkPartThree))
         fridgeCostRef = requests.get(link) .text
         fridgecost_info_ref = json.loads(fridgeCostRef)
+        fridgecost_info = copy.deepcopy(fridgecost_info_ref)
         if fridgecost_info and 'products' in fridgecost_info:
             for j in range(len(fridgecost_info['products'])):
                 if (budget_data >= fridgecost_info['products'][j]['regularPrice']):

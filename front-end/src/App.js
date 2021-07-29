@@ -16,7 +16,25 @@ class App extends Component {
     this.search = this.search.bind(this);
   }
 
+  debug() {
+    return false;
+  }
+
   search(data) {
+    if (this.debug()) {
+      this.setState({
+        Page: Search,
+        product: {
+          energy_usage: 100,
+          modelNumber: '123Test',
+          most_efficient: 'No',
+          name: 'Test Product',
+          regularPrice: '100',
+          url: './this_is_a_fake_link.com'
+        }
+      });
+      return;
+    }
     Net.post(JSON.stringify(data), '/api/visitors', (response) => {
       this.setState({
         Page: Search,
