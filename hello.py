@@ -100,13 +100,16 @@ def put_visitor():
 
     priceOfFridge = 100000
     indexLoc = -1
-    for x in response_info_ref:
-        modelNumberEn = x['model_number']
+    refIndexLoc = -1
+    for x in range(len(response_info_ref)):
+        modelNumberEn = response_info_ref[x]['model_number']
         for y in range(len(info_list)):
             priceInfo = info_list[y]['price']
             if(modelNumberEn == info_list[y]['modelNum'] and priceInfo < priceOfFridge):
                 priceOfFridge = priceInfo
                 indexLoc = y
+                refIndexLoc = x
+                
 
     data_to_front = {}
 
@@ -115,6 +118,8 @@ def put_visitor():
         fridgeCostRef = requests.get(link) .text
         fridgecost_info = json.loads(fridgeCostRef)
         dictToCopy = fridgecost_info['products'][info_list[indexLoc]['index']]
+        dictToCopy['most_efficient'] = response_info_ref[refIndexLoc]['meets_most_efficient_criteria']
+        dictToCopy['energy_usage'] = response_info_ref[refIndexLoc]['annual_energy_use_kwh_yr'] 
         data_to_front = copy.deepcopy(dictToCopy)
 
     if client:
