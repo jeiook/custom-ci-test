@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import DropDown from './DropDown.js';
-import Net from './Net.js';
 
 class Home extends Component {
 	constructor(props) {
@@ -12,27 +11,28 @@ class Home extends Component {
 			product: null
 		};
 
-		this.products = ["fridge", "air conditioner", "oven"];
+		this.products = ["fridge"];
 
-		this.sendUserInfo = this.sendUserInfo.bind(this);
+		this.search = this.search.bind(this);
+		this.app = this.props.App;
 	}
 
 	isNewUser() {
 		return true;
 	}
 
-	sendUserInfo() {
-		const name = document.getElementById("name").value;
-		const budget = document.getElementById("budget").value;
-		const product = document.getElementById("product").value;
-    if (name && !isNaN(budget) && Number(budget) > 0 && product) {
-    	this.setState({
-    		name,
-    		budget: Number(budget),
-    		product,
-    	});
-      Net.post(JSON.stringify(this.state));
-      alert("information sent!");
+	search() {
+		const nameVal = document.getElementById("name").value;
+		const budgetVal = document.getElementById("budget").value;
+		const productVal = document.getElementById("product").value;
+    if (nameVal && !isNaN(budgetVal) && Number(budgetVal) > 0 && productVal) {
+    	const data = {
+    		name: nameVal,
+    		budget: Number(budgetVal),
+    		product: productVal
+    	}
+    	this.setState(data);
+      this.app.search(data);
     } else {
       alert("You need to enter something in all three fields (and have a " +
       	"positive number for the budget)");
@@ -41,15 +41,15 @@ class Home extends Component {
 
 	render() {
 		return (
-			<div className="home flex-col">
-				<h1 id="welcome">Sign in</h1>
+			<div className="home modal flex-col">
+				<h1 id="welcome">Search Efficient Products</h1>
 				<label htmlFor="name">Name</label>
 				<input type="text" id="name" name="name" required minLength="2" />
 				<label htmlFor="budget">Budget</label>
 				<input type="number" id="budget" name="budget" required min="0" />
 				<label htmlFor="product_type">product type</label>
 				<DropDown name="product_type" id="product" itemList={this.products} />
-				<button id="submit" onClick={this.sendUserInfo}>Find Recommendations</button>
+				<button id="submit" onClick={this.search}>Search</button>
 			</div>
 		);
 	}
