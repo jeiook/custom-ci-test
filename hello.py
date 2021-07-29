@@ -78,7 +78,8 @@ def put_visitor():
     budget_data = request.json['budget']
     product_data = request.json['product']
 
-    response_ref = requests.get('https://data.energystar.gov/resource/p5st-her9.json') .text
+    response_ref = requests.get('https://data.energystar.gov/resource/p5st-her9.json', 
+        headers={'X-App-Token': 'k01giiJ5UAtRU31Z5myYGnVAk'}) .text
     response_info_ref = json.loads(response_ref)
 
     link1 = 'https://api.bestbuy.com/v1/products((categoryPath.id=abcat0901000))?apiKey=qhqws47nyvgze2mq3qx4jadt&sort=name.asc&show=name,modelNumber,regularPrice,url&pageSize=99&'
