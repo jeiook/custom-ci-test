@@ -4,28 +4,40 @@ const Net = (() => {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", route);
     xhr.setRequestHeader("Content-Type", "application/json");
-    if (debug) {
-      xhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          console.log("post response:" + xhr.response);
-          callback(xhr.response);
-        }
-      };
-    } else {
-      xhr.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          callback(xhr.response);
-        }
-      };
-    }
+    attachORSC(xhr, debug, callback, "get");
     xhr.send(jsonStr);
   };
   const get = (route, callback = x => {}) => {
     const xhr = new XMLHttpRequest();
     xhr.open("GET", route);
-    xhr.onreadystatechange = callback(xhr.response);
+    attachORSC(xhr, debug, callback, "get");
     xhr.send();
   };
+  const attachORSC = (xhr, debug, callback, mode) => {
+    if (debug) {
+      xhr.onreadystatechange = function () {
+        if (this.readyState === 4) {
+          let data = getObj(xhr.response);
+          console.log(`status: ${this.status};
+            ${mode} response: ${JSON.stringify(data)}`);
+          callback(data);
+        }
+      };
+    } else {
+      xhr.onreadystatechange = function () {
+        if (this.readyState === 4) {
+          callback(getObj(xhr.response));
+        }
+      };
+    }
+  }
+  const getObj = (response) => {
+    if (typeof response == 'string') {
+      return JSON.parse(response);
+    } else {
+      return response;
+    }
+  }
   return {
     post,
     get,

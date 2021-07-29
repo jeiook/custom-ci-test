@@ -93,7 +93,7 @@ def put_visitor():
         fridgeCostRef = requests.get(link) .text
         fridgecost_info = json.loads(fridgeCostRef)
         if fridgecost_info and 'products' in fridgecost_info:
-            for j in range(len(fridgecost_info['products'])):
+            for j in range(min(8, len(fridgecost_info['products']))):
                 if (budget_data >= fridgecost_info['products'][j]['regularPrice']):
                     dict1 = {'loc':i+1,'index':j,'price':fridgecost_info['products'][j]['regularPrice'],'modelNum':fridgecost_info['products'][j]['modelNumber']}
                     info_list.append(dict1)

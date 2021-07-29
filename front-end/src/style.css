@@ -125,3 +125,8 @@ input:focus:valid {
   color: brown;
 }
 
+.loading {
+  font-family: Roboto;
+  font-size: 30px;
+  margin-top: 10vh;
+}

@@ -12,7 +12,7 @@ class Search extends Component {
 		if (product) {
 			return (
 			<div className="search flex-col">
-				<h1>Best Product</h1>
+				<h1>Our Recommendation</h1>
 				<div>
 					<Result item={product} key={product}></Result>
 				</div>
