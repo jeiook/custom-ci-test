@@ -1,5 +1,5 @@
 const Net = (() => {
-  const debug = false;
+  const debug = true;
   const post = (jsonStr, route, callback = x => {}) => {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", route);

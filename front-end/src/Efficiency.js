@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 
 class Efficiency extends Component {
-	constructor(props) {
-		super(props);
-		/* todo: color rating based on efficiency score */
-	}
+	/* todo: color rating based on efficiency score */
 	render() {
 		const { usage, mostEff } = this.props;
 		return (

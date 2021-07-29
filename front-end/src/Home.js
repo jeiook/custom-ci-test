@@ -8,7 +8,8 @@ class Home extends Component {
 		this.state = {
 			name: null,
 			budget: -1,
-			product: null
+			product: null,
+			volume: null
 		};
 
 		this.products = ["fridge"];
@@ -25,17 +26,27 @@ class Home extends Component {
 		const nameVal = document.getElementById("name").value;
 		const budgetVal = document.getElementById("budget").value;
 		const productVal = document.getElementById("product").value;
-    if (nameVal && !isNaN(budgetVal) && Number(budgetVal) > 0 && productVal) {
+		let volumeVal = document.getElementById("volume").value;
+    if (nameVal && !isNaN(budgetVal) && Number(budgetVal) > 0 && productVal 
+    	&& (!volumeVal || (volumeVal && !isNaN(volumeVal) 
+    	&& Number(volumeVal) > 0))) {
+    	if (volumeVal) {
+    		volumeVal = Number(volumeVal);
+    	} else {
+    		volumeVal = -1;
+    	}
     	const data = {
     		name: nameVal,
     		budget: Number(budgetVal),
-    		product: productVal
+    		product: productVal,
+    		volume: volumeVal
     	}
     	this.setState(data);
       this.app.search(data);
     } else {
-      alert("You need to enter something in all three fields (and have a " +
-      	"positive number for the budget)");
+      alert("You need to enter something in the first three fields (and have " +
+      	"a positive number for the budget, and also for the volume if you " + 
+      	"have entered a value for it)");
     }
 	}
 
@@ -49,6 +60,9 @@ class Home extends Component {
 				<input type="number" id="budget" name="budget" required min="0" />
 				<label htmlFor="product_type">product type</label>
 				<DropDown name="product_type" id="product" itemList={this.products} />
+				<label htmlFor="budget">Volume Threshold in ft<sup>3</sup> (optional)
+				</label>
+				<input id="volume" name="volume" min="1" />
 				<button id="submit" onClick={this.search}>Search</button>
 			</div>
 		);
