@@ -77,6 +77,7 @@ def put_visitor():
     data = {'name':user}
     budget_data = request.json['budget']
     product_data = request.json['product']
+    volume_data = request.json['volume']
 
     response_ref = requests.get('https://data.energystar.gov/resource/p5st-her9.json', 
         headers={'X-App-Token': 'k01giiJ5UAtRU31Z5myYGnVAk'}) .text
