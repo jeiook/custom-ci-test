@@ -87,20 +87,21 @@ def put_visitor():
 
     info_list = []
 
-    for i in 15:
-        link = '' . join((link1,link2,str(i+1)),link3)
+    for i in range(15):
+        link = '' . join((link1,link2,str(i+1),link3))
         fridgeCostRef = requests.get(link) .text
         fridgecost_info = json.loads(fridgeCostRef)
-        for j in 99:
-            if (budget_data >= fridgecost_info['products'][j]['regularPrice']):
-                dict1 = {'loc':i+1,'index':j,'price':fridgecost_info['products'][j]['regularPrice'],'modelNum':fridgecost_info['products'][j]['modelNumber']}
-                info_list.append(dict1)
+        if fridgecost_info and 'products' in fridgecost_info:
+            for j in range(len(fridgecost_info['products'])):
+                if (budget_data >= fridgecost_info['products'][j]['regularPrice']):
+                    dict1 = {'loc':i+1,'index':j,'price':fridgecost_info['products'][j]['regularPrice'],'modelNum':fridgecost_info['products'][j]['modelNumber']}
+                    info_list.append(dict1)
 
     priceOfFridge = 100000
     indexLoc = -1
     for x in response_info_ref:
-        modelNumberEn = response_info_ref[x]['model_number']
-        for y in info_list:
+        modelNumberEn = x['model_number']
+        for y in range(len(info_list)):
             priceInfo = info_list[y]['price']
             if(modelNumberEn == info_list[y]['modelNum'] and priceInfo < priceOfFridge):
                 priceOfFridge = priceInfo
@@ -109,15 +110,15 @@ def put_visitor():
     data_to_front = {}
 
     if (indexLoc != -1):
-        link ='' .join((link1,link2,str(info_list[indexLoc]['loc'],link3)))
+        link ='' .join((link1,link2,str(info_list[indexLoc]['loc']),link3))
         fridgeCostRef = requests.get(link) .text
         fridgecost_info = json.loads(fridgeCostRef)
         dictToCopy = fridgecost_info['products'][info_list[indexLoc]['index']]
         data_to_front = copy.deepcopy(dictToCopy)
 
     if client:
-        my_document = db.create_document(data)
-        data['_id'] = my_document['_id']
+        # my_document = db.create_document(data)
+        # data['_id'] = my_document['_id']
         return jsonify(data_to_front)
     else:
         print('No database')
