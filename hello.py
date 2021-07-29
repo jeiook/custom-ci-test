@@ -104,11 +104,13 @@ def put_visitor():
     priceOfFridge = 100000
     indexLoc = -1
     refIndexLoc = -1
+    if (volume_data == -1):
+        volume_data = 10000
     for x in range(len(response_info_ref)):
         modelNumberEn = response_info_ref[x]['model_number']
         for y in range(len(info_list)):
             priceInfo = info_list[y]['price']
-            if(modelNumberEn == info_list[y]['modelNum'] and priceInfo < priceOfFridge):
+            if(modelNumberEn == info_list[y]['modelNum'] and priceInfo < priceOfFridge and volume_data >= int(response_info_ref[x]["adjusted_volume_ft3"])):
                 priceOfFridge = priceInfo
                 indexLoc = y
                 refIndexLoc = x
