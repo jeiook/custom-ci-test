@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DropDown from './DropDown.js';
+import DropDown from './Elements/DropDown.js';
 
 class Home extends Component {
 	constructor(props) {

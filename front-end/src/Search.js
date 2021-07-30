@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Result from './Result.js';
-import Back from './Back.js';
+import Result from './Elements/SearchElements/Result.js';
+import Back from './Elements/Back.js';
 
 class Search extends Component {
 	constructor(props) {
