@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Net from './Net.js';
+import Net from './utils/Net.js';
 import Home from './Home.js';
 import Search from './Search.js';
 import Loading from './Loading.js';
