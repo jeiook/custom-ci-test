@@ -11,9 +11,16 @@ class App extends Component {
 
     this.state = {
       Page: Home,
-      product: null
+      product: null,
+      userData: {
+        name: "",
+        budget: "",
+        product: "",
+        volume: ""
+      }
     }
     this.search = this.search.bind(this);
+    this.goToHome = this.goToHome.bind(this);
   }
 
   debug() {
@@ -31,7 +38,8 @@ class App extends Component {
           name: 'Test Product',
           regularPrice: '100',
           url: './this_is_a_fake_link.com'
-        }
+        },
+        userData: data
       });
       return;
     }
@@ -42,8 +50,18 @@ class App extends Component {
       });
     });
     this.setState({
-      Page: Loading
-    })
+      Page: Loading,
+      userData: data
+    });
+  }
+
+  goToHome() {
+    this.setState({
+      Page: Home,
+      product: null
+    }, () => {
+      Home.updateHomeForm(this.state.userData);
+    });
   }
 
   render() {

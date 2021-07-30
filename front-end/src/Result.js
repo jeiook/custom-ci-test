@@ -13,7 +13,7 @@ class Result extends Component {
 		} = this.props.item;
 		return (
 			<div>
-				<div className="result modal flex-col-left">
+				<div className="result modal flex-col-left card">
 					<h2>{name}</h2>
 					<h3>model: {modelNumber}</h3>
 					<br /><br />

@@ -6,10 +6,10 @@ class Home extends Component {
 		super(props);
 
 		this.state = {
-			name: null,
-			budget: -1,
-			product: null,
-			volume: null
+			name: "",
+			budget: "",
+			product: "",
+			volume: ""
 		};
 
 		this.products = ["fridge"];
@@ -50,9 +50,21 @@ class Home extends Component {
     }
 	}
 
+	static updateHomeForm(data) {
+		const { name, budget, product, volume } = data;
+		document.getElementById("name").value = name;
+		document.getElementById("budget").value = budget;
+		document.getElementById("product").value = product;
+		let vol = volume;
+		if (volume < 0) {
+			vol = "";
+		}
+		document.getElementById("volume").value = vol;
+	}
+
 	render() {
 		return (
-			<div className="home modal flex-col">
+			<div className="home modal flex-col card">
 				<h1 id="welcome">Search Efficient Products</h1>
 				<label htmlFor="name">Name</label>
 				<input type="text" id="name" name="name" required minLength="2" />
