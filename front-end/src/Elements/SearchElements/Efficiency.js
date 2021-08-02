@@ -11,6 +11,9 @@ class Efficiency extends Component {
 					<a href="https://www.energystar.gov/products/most_efficient">
 					Most Efficient (Energy Star)</a>: {mostEff}
 				</div>
+				<div className="energy-info card">
+					Estimated Annual <a target="_blank" href="https://www.energystar.gov/products/appliances/refrigerators/flip-your-fridge" rel="noreferrer">Bill Savings</a>: $240
+				</div>
 			</div>
 		);
 	}

@@ -121,7 +121,7 @@ input:focus:valid {
 }
 
 .product-eff {
-  width: 500px;
+  width: 800px;
   height: 200px;
 }
 
@@ -133,6 +133,10 @@ input:focus:valid {
 
 .dark {
   background: black;
+  color: white;
+}
+
+a .dark {
   color: white;
 }
 
