@@ -1,10 +1,12 @@
+/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Content from './jsx/Content';
+import './style.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Content />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

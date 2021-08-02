@@ -17,6 +17,7 @@ label {
 
 input {
   padding: 5px;
+  margin: 5px;
 }
 
 input:focus:invalid {
@@ -71,6 +72,14 @@ input:focus:valid {
   min-width: 300px;
   width: 25vw;
   text-align: center;
+}
+
+#homeError {
+  position: fixed;
+  left: 10%;
+  top: 30%;
+  width: 100px;
+  height: 100px;
 }
 
 #welcome {
