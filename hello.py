@@ -75,9 +75,11 @@ def get_visitor():
 def put_visitor():
     user = request.json['name']
     data = {'name':user}
-    budget_data = request.json['budget']
+    budget_data_low = request.json['budget_low']
+    budget_data_high = request.json['budget_high']
     product_data = request.json['product']
-    volume_data = request.json['volume']
+    volume_data_low = request.json['volume_low']
+    volume_data_high = request.json['volume_high']
 
     response_ref = requests.get('https://data.energystar.gov/resource/p5st-her9.json', 
         headers={'X-App-Token': 'k01giiJ5UAtRU31Z5myYGnVAk'}) .text
@@ -97,20 +99,23 @@ def put_visitor():
         fridgecost_info = copy.deepcopy(fridgecost_info_ref)
         if fridgecost_info and 'products' in fridgecost_info:
             for j in range(len(fridgecost_info['products'])):
-                if (budget_data >= fridgecost_info['products'][j]['regularPrice']):
+                if (budget_data_high >= fridgecost_info['products'][j]['regularPrice'] and budget_data_low <= fridgecost_info['products'][j]['regularPrice'] ):
                     dict1 = {'loc':i+1,'index':j,'price':fridgecost_info['products'][j]['regularPrice'],'modelNum':fridgecost_info['products'][j]['modelNumber']}
                     info_list.append(dict1)
 
     priceOfFridge = 100000
     indexLoc = -1
     refIndexLoc = -1
-    if (volume_data == -1):
-        volume_data = 10000
+    if (volume_data_low == -1 and volume_data_high == -1):
+        volume_data_high = 10000
+        volume_data_low = 0
     for x in range(len(response_info_ref)):
         modelNumberEn = response_info_ref[x]['model_number']
         for y in range(len(info_list)):
             priceInfo = info_list[y]['price']
-            if(modelNumberEn == info_list[y]['modelNum'] and priceInfo < priceOfFridge and volume_data >= float(response_info_ref[x]["adjusted_volume_ft3"])):
+            if(modelNumberEn == info_list[y]['modelNum'] and priceInfo < priceOfFridge and volume_data_high >= float(response_info_ref[x]["adjusted_volume_ft3"])
+                and volume_data_low <= float(response_info_ref[x]["adjusted_volume_ft3"])):
+                
                 priceOfFridge = priceInfo
                 indexLoc = y
                 refIndexLoc = x
