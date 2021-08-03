@@ -99,7 +99,7 @@ def put_visitor():
         fridgecost_info = copy.deepcopy(fridgecost_info_ref)
         if fridgecost_info and 'products' in fridgecost_info:
             for j in range(len(fridgecost_info['products'])):
-                if (budget_data_high >= fridgecost_info['products'][j]['regularPrice'] and budget_data_low <= fridgecost_info['products'][j]['regularPrice'] ):
+                if (float(budget_data_high) >= float(fridgecost_info['products'][j]['regularPrice']) and float(budget_data_low) <= float(fridgecost_info['products'][j]['regularPrice']) ):
                     dict1 = {'loc':i+1,'index':j,'price':fridgecost_info['products'][j]['regularPrice'],'modelNum':fridgecost_info['products'][j]['modelNumber']}
                     info_list.append(dict1)
 

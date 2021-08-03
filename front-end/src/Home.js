@@ -2,79 +2,124 @@ import React, { Component } from 'react';
 import DropDown from './Elements/DropDown.js';
 
 class Home extends Component {
+	static updateHomeForm(data) {
+		const { budgetHigh, product } = data;
+		document.getElementById("budgetHigh").value = budgetHigh;
+		document.getElementById("product").value = product;
+	}
+
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			name: "",
-			budget: "",
+			budgetLow: "",
+			budgetHigh: "",
 			product: "",
-			volume: ""
+			volumeLow: "",
+			volumeHigh: ""
 		};
 
 		this.products = ["fridge"];
-
+		this.advanced = false;
 		this.search = this.search.bind(this);
+		this.toggleAdvanced = this.toggleAdvanced.bind(this);
 		this.app = this.props.App;
 	}
 
-	isNewUser() {
-		return true;
-	}
-
 	search() {
-		const nameVal = document.getElementById("name").value;
-		const budgetVal = document.getElementById("budget").value;
+		const nameVal = "blank";
+		const budgetHighVal = document.getElementById("budgetHigh").value;
 		const productVal = document.getElementById("product").value;
-		let volumeVal = document.getElementById("volume").value;
-    if (nameVal && !isNaN(budgetVal) && Number(budgetVal) > 0 && productVal 
-    	&& (!volumeVal || (volumeVal && !isNaN(volumeVal) 
-    	&& Number(volumeVal) > 0))) {
-    	if (volumeVal) {
-    		volumeVal = Number(volumeVal);
-    	} else {
-    		volumeVal = -1;
-    	}
-    	const data = {
-    		name: nameVal,
-    		budget: Number(budgetVal),
-    		product: productVal,
-    		volume: volumeVal
-    	}
-    	this.setState(data);
-      this.app.search(data);
-    } else {
-      alert("You need to enter something in the first three fields (and have " +
-      	"a positive number for the budget, and also for the volume if you " + 
-      	"have entered a value for it)");
-    }
-	}
-
-	static updateHomeForm(data) {
-		const { name, budget, product, volume } = data;
-		document.getElementById("name").value = name;
-		document.getElementById("budget").value = budget;
-		document.getElementById("product").value = product;
-		let vol = volume;
-		if (volume < 0) {
-			vol = "";
+		if (!this.advanced) {
+			if (!Number.isNaN(budgetHighVal) && Number(budgetHighVal) >= 500 && productVal) {
+				const data = {
+					name: nameVal,
+					budget_low: 1,
+					budget_high: budgetHighVal,
+					product: productVal,
+					volume_low: 1,
+					volume_high: 1000000,
+				}
+				this.setState({
+					name: data['name'],
+					budgetLow: data['budget_low'],
+					budgetHigh: data['budget_high'],
+					product: data['product'],
+					volumeLow: data['volume_low'],
+					volumeHigh: data['volume_high'],
+				});
+				this.app.search(data);
+			} else {
+				alert("Please enter a budget (a number >= 500)");
+			}
+		} else {
+			const budgetLowVal = document.getElementById('budgetLow').value;
+			const volumeLowVal = document.getElementById('volumeLow').value;
+			const volumeHighVal = document.getElementById('volumeHigh').value;
+			if (!Number.isNaN(budgetHighVal) && Number(budgetHighVal) >= 500 
+			&& !Number.isNaN(budgetLowVal) && Number(budgetLowVal) >= 1 
+			&& Number(budgetHighVal) >= Number(budgetLowVal)
+			&& productVal
+			&& !Number.isNaN(volumeHighVal) && Number(volumeHighVal) >= 10
+    		&& !Number.isNaN(volumeLowVal) && Number(volumeLowVal) >= 1
+			&& Number(volumeHighVal) >= Number(volumeLowVal)) {
+				const data = {
+					name: nameVal,
+					budget_low: budgetLowVal,
+					budget_high: budgetHighVal,
+					product: productVal,
+					volume_low: volumeLowVal,
+					volume_high: volumeHighVal,
+				}
+				this.setState({
+					name: data['name'],
+					budgetLow: data['budget_low'],
+					budgetHigh: data['budget_high'],
+					product: data['product'],
+					volumeLow: data['volume_low'],
+					volumeHigh: data['volume_high'],
+				});
+				this.app.search(data);
+			} else {
+				alert("Please enter valid values.");
+			}
 		}
-		document.getElementById("volume").value = vol;
 	}
 
+	toggleAdvanced() {
+		const container = document.getElementById('home');
+		const adv = document.getElementById('advanced-info');
+		if (!this.advanced) {
+			container.classList.add('longer');
+			adv.classList.remove('do-not-render');
+			this.advanced = true;
+		} else {
+			adv.classList.add('do-not-render');
+			container.classList.remove('longer');
+			this.advanced = false;
+		}
+	}
+	
 	render() {
 		return (
-			<div className="home modal flex-col card">
+			<div id="home" className="home modal flex-col card">
 				<h1 id="welcome">Search Efficient Products</h1>
-				<label htmlFor="name">Name</label>
-				<input type="text" id="name" name="name" required minLength="2" />
-				<label htmlFor="budget">Budget</label>
-				<input type="number" id="budget" name="budget" required min="0" />
+				<label htmlFor="budgetHigh">Budget (min 500)</label>
+				<input type="number" id="budgetHigh" name="budgetHigh" required min="500" />
 				<label htmlFor="product_type">product type</label>
 				<DropDown name="product_type" id="product" itemList={this.products} />
-				<label htmlFor="budget">Volume Threshold in ft<sup>3</sup> (optional)
-				</label>
-				<input id="volume" name="volume" min="1" />
+				<button id="enable-advanced" onClick={this.toggleAdvanced}>Advanced</button>
+				<div id="advanced-info" className="flex-col do-not-render">
+					<label htmlFor="volumeHigh">Volume upper bound in ft<sup>3</sup> (min 10)
+					</label>
+					<input type="number" id="volumeHigh" name="volumeHigh" min="1" />
+					<label htmlFor="volumeLow">Volume lower bound (min 1)
+					</label>
+					<input type="number" id="volumeLow" name="volumeLow" min="1" />
+					<label htmlFor="budgetLow">Minimum Price (min 1)</label>
+					<input type="number" id="budgetLow" name="budgetLow" min="1" />
+				</div>
 				<button id="submit" onClick={this.search}>Search</button>
 			</div>
 		);

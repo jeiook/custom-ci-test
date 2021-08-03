@@ -65,12 +65,20 @@ input:focus:valid {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
+.do-not-render {
+  display: none;
+}
+
 .home {
   min-height: 400px;
   height: 60vh;
   min-width: 300px;
   width: 25vw;
   text-align: center;
+}
+
+.longer {
+  height: 75vh;
 }
 
 #welcome {

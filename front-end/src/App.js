@@ -24,7 +24,7 @@ class App extends Component {
   }
 
   debug() {
-    return true;
+    return false;
   }
 
   search(data) {
