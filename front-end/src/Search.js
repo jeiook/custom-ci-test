@@ -9,7 +9,7 @@ class Search extends Component {
 	}
 	render() {
 		const { product } = this.app.state;
-		if (product) {
+		if (Object.entries(product).length !== 0) {
 			return (
 			<div className="search flex-col">
 				<Back app={this.app}></Back>
@@ -24,7 +24,7 @@ class Search extends Component {
 				<div>
 					<Back app={this.app}></Back>
 					<div className="search modal card">
-						<p>Unfortunately, we couldn't find the best product</p>	
+						<p>Unfortunately, we couldn't find anything with your specifications.</p>	
 					</div>
 				</div>
 			);

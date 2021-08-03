@@ -19,7 +19,7 @@ const Net = (() => {
         if (this.readyState === 4) {
           let data = getObj(xhr.response);
           console.log(`status: ${this.status};
-            ${mode} response: ${JSON.stringify(data)}`);
+          ${mode} response: ${data}`);
           callback(data);
         }
       };
@@ -32,10 +32,11 @@ const Net = (() => {
     }
   }
   const getObj = (response) => {
-    if (typeof response == 'string') {
+    try {
       return JSON.parse(response);
-    } else {
-      return response;
+    } catch (e) {
+      console.log(`error in response; here is the raw response: ${response}`)
+      return {};
     }
   }
   return {

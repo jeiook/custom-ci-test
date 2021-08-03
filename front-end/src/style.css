@@ -131,6 +131,17 @@ input:focus:valid {
 .product-eff {
   width: 800px;
   height: 200px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 850px) {
+  .product-eff {
+    width: 100%;
+  }
 }
 
 .energy-info {

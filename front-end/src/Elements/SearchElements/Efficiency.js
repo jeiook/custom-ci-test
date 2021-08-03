@@ -5,7 +5,7 @@ class Efficiency extends Component {
 	render() {
 		const { usage, mostEff } = this.props;
 		return (
-			<div className="product-eff flex-row">
+			<div className="product-eff">
 				<div className="energy-info dark card">Energy Usage: {usage} kWh/y</div>
 				<div className="energy-info card">
 					<a href="https://www.energystar.gov/products/most_efficient">
