@@ -4,7 +4,7 @@ class Loading extends Component {
 	render() {
 		return (
 			<div className="loading flex-col">
-				<p>Looking for Efficient Options...</p>
+				<p>Looking for more efficient alternatives...</p>
 			</div>
 		);
 	}
